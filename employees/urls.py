@@ -1,7 +1,8 @@
 
 from django.contrib import admin
 from django.urls import path
-from .views import test
+from .views import EmployeeListView,ShuffleTrainingView
 urlpatterns = [
-    path('',test.as_view()),
+    path('employees/', EmployeeListView.as_view(), name='employee-list'),
+    path('shuffle/', ShuffleTrainingView.as_view(), name='shuffle-training'),
 ]

@@ -13,9 +13,7 @@ def get_available_slots():
     while current < end:
         slots.append(current)
         current += timedelta(hours=1)
-    print(slots)
     return slots
-get_available_slots()
 
 def schedule_trainings():
     """Assign training slots to employees in groups of 10-25."""
