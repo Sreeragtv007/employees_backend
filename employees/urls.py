@@ -1,8 +1,11 @@
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import EmployeeViewSet, shuffle_training
 
-from django.contrib import admin
-from django.urls import path
-from .views import EmployeeListView,ShuffleTrainingView
+router = DefaultRouter()
+router.register(r'employees', EmployeeViewSet, basename='employee')
+
 urlpatterns = [
-    path('employees/', EmployeeListView.as_view(), name='employee-list'),
-    path('shuffle/', ShuffleTrainingView.as_view(), name='shuffle-training'),
+    path('', include(router.urls)),
+    path('shuffle/', shuffle_training, name='shuffle-training'),
 ]
