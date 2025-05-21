@@ -11,7 +11,20 @@ from rest_framework import status
 @api_view(['GET'])
 def employee_list(request):
     employees = Employee.objects.all()
+
+    # for emp in employees:
+    #     if not emp.available_from <= emp.training_time < emp.available_to:
+    #         print(emp.name)
+    #         print('employees not in the sift time')
+    # for i in range(8, 18):
+    #     obj = Employee.objects.filter(training_time=time(i, 0)).count()
+    #     print(obj)
+
+    # emp = Employee.objects.filter(training_time=None).count()
+    # print('--- training none----')
+    # print(emp)
     serializer = EmployeeSerializer(employees, many=True)
+
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -20,6 +33,7 @@ def shuffle_training(request):
 
     start_hour = 8
     end_hour = 18
+
     slots = [time(hour=h) for h in range(start_hour, end_hour)]
 
     Employee.objects.update(training_time=None)
@@ -35,13 +49,29 @@ def shuffle_training(request):
             slot for slot in slots
             if emp.available_from <= slot < emp.available_to
         ]
-        random.shuffle(available_slots)
+
+        # random.shuffle(available_slots)
 
         for slot in available_slots:
-            if len(slot_batches[slot]) < 25:
+
+            if len(slot_batches[slot]) < 20:
                 slot_batches[slot].append(emp)
+
                 emp.training_time = slot
                 emp.save()
                 break
 
     return Response({"status": "Training shuffled"}, status=status.HTTP_200_OK)
+
+
+
+
+
+
+
+@api_view(['POST'])
+def shuffle_training2(request):
+    
+    slots = [time(hour=h) for h in range(8, 18)]
+    
+    return Response('test')
