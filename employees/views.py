@@ -1,14 +1,11 @@
 from collections import defaultdict
 import random
 from datetime import time
-
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Employee
 from .serializers import EmployeeSerializer
 from rest_framework import status
-
-
 from collections import defaultdict
 
 
@@ -16,14 +13,14 @@ from collections import defaultdict
 def employee_list(request):
     employees = Employee.objects.all()
 
-    for emp in employees:
-        if not emp.available_from <= emp.training_time < emp.available_to:
-            print(emp.name)
-            print('employees not in the sift time')
-    for i in range(8, 18):
-        obj = Employee.objects.filter(training_time=time(i, 0)).count()
-        print('-------------------------')
-        print(obj)
+    # for emp in employees:
+    #     if not emp.available_from <= emp.training_time < emp.available_to:
+    #         print(emp.name)
+    #         print('employees not in the sift time')
+    # for i in range(8, 18):
+    #     obj = Employee.objects.filter(training_time=time(i, 0)).count()
+    #     print('-------------------------')
+    #     print(obj)
 
     emp = Employee.objects.filter(training_time=None).count()
     print('--- training none----')
